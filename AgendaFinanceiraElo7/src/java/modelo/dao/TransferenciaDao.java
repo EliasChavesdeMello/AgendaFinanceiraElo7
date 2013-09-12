@@ -4,16 +4,13 @@ import com.thoughtworks.xstream.persistence.FilePersistenceStrategy;
 import com.thoughtworks.xstream.persistence.PersistenceStrategy;
 import com.thoughtworks.xstream.persistence.XmlArrayList;
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import modelo.Transferencia;
 
-@ManagedBean
-@SessionScoped
-public class TransferenciaDao {
+public class TransferenciaDao implements Serializable{
 
     public List<Transferencia> transferencias;
     public PersistenceStrategy strategy;
@@ -21,7 +18,7 @@ public class TransferenciaDao {
 
     public TransferenciaDao() {
         this.transferencias = new ArrayList<Transferencia>();
-        strategy = new FilePersistenceStrategy(new File("/tmp"));
+        strategy = new FilePersistenceStrategy(new File("C:\\Users\\elias\\Desktop\\ELIAS-NAO-mexa\\lixo"));
         listPersistence = new XmlArrayList(strategy);
         for (Iterator it = listPersistence.iterator(); it.hasNext();) {
             Transferencia trf = (Transferencia) it.next();

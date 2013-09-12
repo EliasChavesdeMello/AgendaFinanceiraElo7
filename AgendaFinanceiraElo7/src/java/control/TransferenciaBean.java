@@ -1,45 +1,45 @@
 package control;
-
+import java.io.Serializable;
 import modelo.Transferencia;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.event.ActionEvent;
 import modelo.dao.TransferenciaDao;
 
-@ManagedBean
+@ManagedBean(name="transferenciaBean")
 @SessionScoped
  
-public class TransferenciaBean {
+public class TransferenciaBean implements Serializable {
  
-	Transferencia transferencia = new Transferencia();
- 
+	Transferencia transferencia = new Transferencia(); 
 	List<Transferencia> transferencias = new ArrayList<Transferencia>(); 
+	private TransferenciaDao transferenciaDao = new TransferenciaDao();
  
 	public TransferenciaBean(){
-		transferencias = new TransferenciaDao().listar();
+		transferencias = transferenciaDao.listar();
 		transferencia = new Transferencia();
 	}
  
 	public void cadastrar(ActionEvent actionEvent){
-		new TransferenciaDao().inserir(transferencia);
-		transferencias = new TransferenciaDao().listar();
+		transferenciaDao.inserir(transferencia);
+		transferencias = transferenciaDao.listar();
 		transferencia = new Transferencia();
 	}
  
 	public void alterar(ActionEvent actionEvent){
-		new TransferenciaDao().alterar(transferencia);
-		transferencias = new TransferenciaDao().listar();
+		transferenciaDao.alterar(transferencia);
+		transferencias = transferenciaDao.listar();
 		transferencia = new Transferencia();
 	}
 	public void excluir(ActionEvent actionEvent){
-		new TransferenciaDao().excluir(transferencia);
-		transferencias = new TransferenciaDao().listar();
+		transferenciaDao.excluir(transferencia);
+		transferencias = transferenciaDao.listar();
 		transferencia = new Transferencia();
 	}
  
-	//getters and setters
 	public Transferencia getTransferencia() {
 		return transferencia;
 	}
