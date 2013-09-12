@@ -19,93 +19,93 @@
 
                 <p:layoutUnit position="center">
                     Welcome to PrimeFaces
-                    
- 
-	<h:form id="formPrincipal">
- 
-		<p:dataTable var="lista" value="#{transferenciaBean.transferrencias}" id="tabelaPessoas">
-			<f:facet name="header">Lista de Transferências Cadastradas</f:facet>
- 
-			<p:column headerText="ContaDe">
- 
-				<h:outputText value="#{lista.contaDe}" />
-			</p:column>
-			<p:column headerText="ContaTo">
- 
-				<h:outputText value="#{lista.contaTo}" />
-			</p:column>
-			<p:column headerText="Data">
- 
-				<h:outputText value="#{lista.agenda}" />
-			</p:column>
-			<p:column headerText="Ações">
-				<p:commandLink title="Alterar" update=":formAlterar:Alterar"
-					oncomplete="dialogAlterar.show()" immediate="true">
-					<p:graphicImage value="/imagens/tick_button.png" />
-					<f:setPropertyActionListener target="#{transferenciaBean.transferencia}"
-						value="#{lista}" />
-				</p:commandLink>
-				<p:commandLink title="Excluir" update=":formExcluir:Excluir"
-					oncomplete="confirmation.show()" immediate="true">
-					<p:graphicImage value="/imagens/exclamation_button.png" />
-					<f:setPropertyActionListener target="#{transferenciaBean.transferencia}"
-						value="#{lista}"  />
-				</p:commandLink>
-			</p:column>
- 
-		</p:dataTable>
- 
-		<p:commandButton value="Cadastrar" id="cadastrar"
-			oncomplete="dialogCadastrar.show()" />
-	</h:form>
- 
-	<h:form id="formAlterar">
-		<p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true" id="Alterar">
-			<p:panelGrid id="panelAlterar" columns="2">
-				<h:outputText value="Nome:" />
-				<p:inputText value="#{transferenciaBean.transferencia.contaDe}" />
-				<h:outputText value="Endereco:" />
-				<p:inputText value="#{transferenciaBean.transferencia.contaTo}" />
-				<h:outputText value="Telefone:" />
-				<p:inputText value="#{transferenciaBean.transferencia.agenda}" />
-			</p:panelGrid>
-			<p:commandButton value="Alterar"
-				actionListener="#{transferenciaBean.alterar}" update=":formPrincipal:tabelaPessoas" oncomplete="dialogAlterar.hide()"/>
-		</p:dialog>
-	</h:form>
- 
-	<h:form id="formCadastrar">
-		<p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
-			<p:panelGrid id="panelCadastrar" columns="2">
-				<h:outputText value="Nome:" />
-				<p:inputText value="#{transferenciaBean.transferencia.contaDe}" />
-				<h:outputText value="Endereco:" />
-				<p:inputText value="#{transferenciaBean.transferencia.contaTo}" />
-				<h:outputText value="Telefone:" />
-				<p:inputText value="#{transferenciaBean.transferencia.agenda}" />
-			</p:panelGrid>
-			<p:commandButton value="Cadastrar"
-				actionListener="#{transferenciaBean.cadastrar}" update=":formPrincipal:tabelaPessoas" oncomplete="dialogCadastrar.hide()"/>
-		</p:dialog>
-	</h:form>
-	<h:form id="formExcluir">
-		<p:confirmDialog id="Excluir"
-			message="Você gostaria de Deletar o #{transferenciaBean.transferencia.contaDe}?"
-			header="Excluir" severity="alert"
-			widgetVar="confirmation">
- 
-			<p:commandButton id="confirm" value="Sim" 
-				oncomplete="confirmation.hide()"
-				actionListener="#{transferenciaBean.excluir}" update=":formPrincipal:tabelaPessoas"/>
-			<p:commandButton id="decline" value="Não"
-				onclick="confirmation.hide()" type="button" />
- 
-		</p:confirmDialog>
-	</h:form>
- 
 
-                    
-                    
+
+                    <h:form id="formPrincipal">
+
+                        <p:dataTable var="lista" value="#{transferenciaBean.transferrencias}" id="tabelaPessoas">
+                            <f:facet name="header">Lista de Transferências Cadastradas</f:facet>
+
+                            <p:column headerText="ContaDe">
+
+                                <h:outputText value="#{lista.contaDe}" />
+                            </p:column>
+                            <p:column headerText="ContaTo">
+
+                                <h:outputText value="#{lista.contaTo}" />
+                            </p:column>
+                            <p:column headerText="Data">
+
+                                <h:outputText value="#{lista.agenda}" />
+                            </p:column>
+                            <p:column headerText="Ações">
+                                <p:commandLink title="Alterar" update=":formAlterar:Alterar"
+                                               oncomplete="dialogAlterar.show()" immediate="true">
+
+                                    <f:setPropertyActionListener target="#{transferenciaBean.transferencia}"
+                                                                 value="#{lista}" />
+                                </p:commandLink>
+                                <p:commandLink title="Excluir" update=":formExcluir:Excluir"
+                                               oncomplete="confirmation.show()" immediate="true">
+
+                                    <f:setPropertyActionListener target="#{transferenciaBean.transferencia}"
+                                                                 value="#{lista}"  />
+                                </p:commandLink>
+                            </p:column>
+
+                        </p:dataTable>
+
+                        <p:commandButton value="Cadastrar" id="cadastrar"
+                                         oncomplete="dialogCadastrar.show()" />
+                    </h:form>
+
+                    <h:form id="formAlterar">
+                        <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true" id="Alterar">
+                            <p:panelGrid id="panelAlterar" columns="2">
+                                <h:outputText value="Nome:" />
+                                <p:inputText value="#{transferenciaBean.transferencia.contaDe}" />
+                                <h:outputText value="Endereco:" />
+                                <p:inputText value="#{transferenciaBean.transferencia.contaTo}" />
+                                <h:outputText value="Telefone:" />
+                                <p:inputText value="#{transferenciaBean.transferencia.agenda}" />
+                            </p:panelGrid>
+                            <p:commandButton value="Alterar"
+                                             actionListener="#{transferenciaBean.alterar}" update=":formPrincipal:tabelaPessoas" oncomplete="dialogAlterar.hide()"/>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="formCadastrar">
+                        <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true">
+                            <p:panelGrid id="panelCadastrar" columns="2">
+                                <h:outputText value="Nome:" />
+                                <p:inputText value="#{transferenciaBean.transferencia.contaDe}" />
+                                <h:outputText value="Endereco:" />
+                                <p:inputText value="#{transferenciaBean.transferencia.contaTo}" />
+                                <h:outputText value="Telefone:" />
+                                <p:inputText value="#{transferenciaBean.transferencia.agenda}" />
+                            </p:panelGrid>
+                            <p:commandButton value="Cadastrar"
+                                             actionListener="#{transferenciaBean.cadastrar}" update=":formPrincipal:tabelaPessoas" oncomplete="dialogCadastrar.hide()"/>
+                        </p:dialog>
+                    </h:form>
+                    <h:form id="formExcluir">
+                        <p:confirmDialog id="Excluir"
+                                         message="Você gostaria de Deletar o #{transferenciaBean.transferencia.contaDe}?"
+                                         header="Excluir" severity="alert"
+                                         widgetVar="confirmation">
+
+                            <p:commandButton id="confirm" value="Sim" 
+                                             oncomplete="confirmation.hide()"
+                                             actionListener="#{transferenciaBean.excluir}" update=":formPrincipal:tabelaPessoas"/>
+                            <p:commandButton id="decline" value="Não"
+                                             onclick="confirmation.hide()" type="button" />
+
+                        </p:confirmDialog>
+                    </h:form>
+
+
+
+
                 </p:layoutUnit>
 
             </p:layout>

@@ -7,8 +7,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import modelo.Transferencia;
 
+@ManagedBean
+@SessionScoped
 public class TransferenciaDao {
 
     public List<Transferencia> transferencias;
