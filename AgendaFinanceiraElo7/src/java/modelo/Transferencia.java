@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Transferencia implements Serializable{
- 
-	private int id;
 	private Date created;
         private Date agenda;
         private String contaDe;
@@ -14,12 +12,6 @@ public class Transferencia implements Serializable{
         private char tipoOperacao;
         private BigDecimal valor;
         private BigDecimal taxa;
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
     public Date getCreated() {
         return created;
     }

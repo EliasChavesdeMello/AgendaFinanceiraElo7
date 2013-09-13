@@ -4,9 +4,11 @@ import modelo.Transferencia;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.event.ActionEvent;
+import modelo.RegrasTaxa;
 import modelo.dao.TransferenciaDao;
 
 @ManagedBean(name="transferenciaBean")
@@ -24,12 +26,15 @@ public class TransferenciaBean implements Serializable {
 	}
  
 	public void cadastrar(ActionEvent actionEvent){
+            transferencia.setCreated(Calendar.getInstance().getTime());
+            transferencia.setTaxa(RegrasTaxa.getTaxa( transferencia ) );
 		transferenciaDao.inserir(transferencia);
 		transferencias = transferenciaDao.listar();
 		transferencia = new Transferencia();
 	}
  
 	public void alterar(ActionEvent actionEvent){
+            transferencia.setTaxa(RegrasTaxa.getTaxa( transferencia ) );
 		transferenciaDao.alterar(transferencia);
 		transferencias = transferenciaDao.listar();
 		transferencia = new Transferencia();

@@ -50,6 +50,7 @@ public class TransferenciaDao implements Serializable{
     }
 
     public void alterar(Transferencia transferencia) {
+        System.out.println("alterando");
         try {
             for (Iterator it = listPersistence.iterator(); it.hasNext();) {
                 Transferencia trf = (Transferencia) it.next();
