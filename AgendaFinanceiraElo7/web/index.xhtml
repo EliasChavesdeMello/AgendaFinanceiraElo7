@@ -18,34 +18,48 @@
             <p:layout fullPage="true">
 
                 <p:layoutUnit position="center">
-                    
+
                     <h:form id="formPrincipal">
 
                         <p:dataTable var="lista" value="#{transferenciaBean.transferencias}" id="tabelaTr">
                             <f:facet name="header">Lista de Transferências Cadastradas</f:facet>
-
                             <p:column headerText="ContaDe">
-
                                 <h:outputText value="#{lista.contaDe}" />
                             </p:column>
                             <p:column headerText="ContaTo">
-
                                 <h:outputText value="#{lista.contaTo}" />
                             </p:column>
-                            <p:column headerText="Data">
-
-                                <h:outputText value="#{lista.agenda}" />
+                            <p:column headerText="Data a transferir">
+                                <h:outputText value="#{lista.agenda}" >
+                                    <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                                </h:outputText>
                             </p:column>
+                            <p:column headerText="Valor">
+                                <h:outputText value="#{lista.valor}" >
+                                    <f:convertNumber currencySymbol="$" type="currency" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Tipo Operação">
+                                <h:outputText value="#{lista.tipoOperacao}" />
+                                    
+                            </p:column>
+                            <p:column headerText="Taxa">
+                                <h:outputText value="#{lista.taxa}" >
+                                    <f:convertNumber currencySymbol="$" type="currency" />
+                                </h:outputText>
+                            </p:column>
+
                             <p:column headerText="Ações">
                                 <p:commandLink title="Alterar" update=":formAlterar:Alterar"
                                                oncomplete="dialogAlterar.show()" immediate="true">
-
-                                    <f:setPropertyActionListener target="#{transferenciaBean.transferencia}"
+                                    <h:outputText value="Alterar" />
+                                    <f:setPropertyActionListener target="#{transferenciaBean.transferencia}" 
                                                                  value="#{lista}" />
                                 </p:commandLink>
-                                <p:commandLink title="Excluir" update=":formExcluir:Excluir"
-                                               oncomplete="confirmation.show()" immediate="true">
-
+                                <h:outputText value =" " />
+                                <p:commandLink title="Excluir" update=":formExcluir:Excluir" 
+                                               oncomplete="confirmation.show()" immediate="false">
+                                    <h:outputText value="Excluir" />
                                     <f:setPropertyActionListener target="#{transferenciaBean.transferencia}"
                                                                  value="#{lista}"  />
                                 </p:commandLink>
@@ -58,15 +72,27 @@
                     </h:form>
 
                     <h:form id="formAlterar">
-                        <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="true" id="Alterar">
+                        <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="false" id="Alterar">
                             <p:panelGrid id="panelAlterar" columns="2">
                                 <h:outputText value="Conta de:" />
-                                <p:inputText value="#{transferenciaBean.transferencia.contaDe}" />
+                                <p:inputMask value="#{transferenciaBean.transferencia.contaDe}" mask="99999-9"/>
                                 <h:outputText value="Conta to:" />
-                                <p:inputText value="#{transferenciaBean.transferencia.contaTo}" />
+                                <p:inputMask value="#{transferenciaBean.transferencia.contaTo}" mask="99999-9"/>
                                 <h:outputText value="data a transferir:" />
-                                <p:calendar value="#{transferenciaBean.transferencia.agenda}" id="popupCal" />
-                                
+                                <p:calendar value="#{transferenciaBean.transferencia.agenda}" />
+                                <h:outputText value="Valor:" />
+                                <h:inputText id="valorInput" value="#{transferenciaBean.transferencia.valor}" >
+                                    <f:validateDoubleRange minimum="0.01" maximum="99999999.99" />
+                                </h:inputText>	
+                                <h:outputText value="Tipo Taxa:" />
+                                <p:selectOneMenu value="#{transferenciaBean.transferencia.tipoOperacao}">  
+                                    <f:selectItem itemLabel="Selecione" itemValue="" />  
+                                    <f:selectItem itemLabel="Tipo A" itemValue="A" />  
+                                    <f:selectItem itemLabel="Tipo B" itemValue="B" />  
+                                    <f:selectItem itemLabel="Tipo C" itemValue="C" />  
+                                    <f:selectItem itemLabel="Tipo D" itemValue="D" />  
+
+                                </p:selectOneMenu> 
                             </p:panelGrid>
                             <p:commandButton value="Alterar"
                                              actionListener="#{transferenciaBean.alterar}" update=":formPrincipal:tabelaTr" oncomplete="dialogAlterar.hide()"/>
@@ -74,32 +100,40 @@
                     </h:form>
 
                     <h:form id="formCadastrar">
-                        <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="false"  showEffect="fade" hideEffect="fade"  >
-                            
+                        <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="true"  showEffect="fade" hideEffect="fade"  >
+
                             <p:panelGrid id="panelCadastrar" columns="2">
                                 <h:outputText value="Conta de:" />
-                                <p:inputText value="#{transferenciaBean.transferencia.contaDe}" />
+                                <p:inputMask value="#{transferenciaBean.transferencia.contaDe}" mask="99999-9"/>
                                 <h:outputText value="Conta to:" />
-                                <p:inputText value="#{transferenciaBean.transferencia.contaTo}" />
+                                <p:inputMask value="#{transferenciaBean.transferencia.contaTo}" mask="99999-9"/>
                                 <h:outputText value="data a transferir:" />
                                 <p:calendar value="#{transferenciaBean.transferencia.agenda}" />
-                                
+                                <h:outputText value="Valor:" />
+                                <h:inputText id="valorInput" value="#{transferenciaBean.transferencia.valor}" >
+                                    <f:validateDoubleRange minimum="0.01" maximum="99999999.99" />
+                                </h:inputText>	
+                                <h:outputText value="Tipo Taxa:" />
+                                <p:selectOneMenu value="#{transferenciaBean.transferencia.tipoOperacao}">  
+                                    <f:selectItem itemLabel="Selecione" itemValue="" />  
+                                    <f:selectItem itemLabel="Tipo A" itemValue="A" />  
+                                    <f:selectItem itemLabel="Tipo B" itemValue="B" />  
+                                    <f:selectItem itemLabel="Tipo C" itemValue="C" />  
+                                    <f:selectItem itemLabel="Tipo D" itemValue="D" />  
+
+                                </p:selectOneMenu> 
                             </p:panelGrid>
                             <p:commandButton value="Cadastrar"
                                              actionListener="#{transferenciaBean.cadastrar}" update=":formPrincipal:tabelaTr" oncomplete="dialogCadastrar.hide()"/>
                         </p:dialog>
                     </h:form>
                     <h:form id="formExcluir">
-                        <p:confirmDialog id="Excluir"
-                                         message="Você gostaria de Deletar o #{transferenciaBean.transferencia.contaDe}?"
-                                         header="Excluir" severity="alert"
-                                         widgetVar="confirmation">
+                        <p:confirmDialog id="Excluir" message="Você gostaria de Deletar o #{transferenciaBean.transferencia.contaDe}?"
+                                         header="Excluir" severity="alert" widgetVar="confirmation">
 
-                            <p:commandButton id="confirm" value="Sim" 
-                                             oncomplete="confirmation.hide()"
+                            <p:commandButton id="confirm" value="Sim" oncomplete="confirmation.hide();"
                                              actionListener="#{transferenciaBean.excluir}" update=":formPrincipal:tabelaTr"/>
-                            <p:commandButton id="decline" value="Não"
-                                             onclick="confirmation.hide()" type="button" />
+                            <p:commandButton id="decline" value="Não" onclick="confirmation.hide();" type="button" />
 
                         </p:confirmDialog>
                     </h:form>
