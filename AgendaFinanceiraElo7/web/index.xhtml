@@ -4,7 +4,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pe="http://primefaces.org/ui/extensions" >
+      xmlns:pe="http://primefaces.org/ui/extensions"  xmlns:ez="http://xmlns.jcp.org/jsf/composite/ezcomp">
     <f:view contentType="text/html">
         <h:head>
             <f:facet name="first">
@@ -68,53 +68,18 @@
                     </h:form>
                     <h:form id="formAlterar">
                         <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="false" id="Alterar">
-                            <p:panelGrid id="panelAlterar" columns="2">
-                                <h:outputText value="Conta de:" />
-                                <p:inputMask value="#{transferenciaBean.transferencia.contaDe}" mask="99999-9"/>
-                                <h:outputText value="Conta to:" />
-                                <p:inputMask value="#{transferenciaBean.transferencia.contaTo}" mask="99999-9" />
-                                <h:outputText value="data a transferir:" />
-                                
-                                <p:calendar locale="pt" showButtonPanel="true" navigator="true" value="#{transferenciaBean.transferencia.agenda}" id="ptCal"/> 
-                                <h:outputText value="Valor:" />
-                                <pe:inputNumber id="tvalor" value="#{transferenciaBean.transferencia.valor}"   
-         symbol="$ " decimalSeparator="," thousandSeparator="." />  
-
-                                <h:outputText value="Tipo Taxa:" />
-                                <p:selectOneMenu value="#{transferenciaBean.transferencia.tipoOperacao}">  
-                                    <f:selectItem itemLabel="Selecione" itemValue="" />  
-                                    <f:selectItem itemLabel="Tipo A" itemValue="A" />  
-                                    <f:selectItem itemLabel="Tipo B" itemValue="B" />  
-                                    <f:selectItem itemLabel="Tipo C" itemValue="C" />  
-                                    <f:selectItem itemLabel="Tipo D" itemValue="D" />  
-                                </p:selectOneMenu> 
+                            <p:panelGrid id="panelAlterar" columns="3">
+                                <ez:editor/>                                
                             </p:panelGrid>
                             <p:commandButton value="Alterar"
-                                        actionListener="#{transferenciaBean.alterar}" update=":formPrincipal:tabelaTr" oncomplete="dialogAlterar.hide();"/>
+                                             actionListener="#{transferenciaBean.alterar}" update=":formPrincipal:tabelaTr" oncomplete="dialogAlterar.hide();"/>
                         </p:dialog>
                     </h:form>
                     <h:form id="formCadastrar">
                         <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="false"  >
-                            <p:panelGrid id="panelCadastrar" columns="2">
-                                <h:outputText value="Conta de:" />
-                                <p:inputMask value="#{transferenciaBean.transferencia.contaDe}" mask="99999-9"/>
-                                <h:outputText value="Conta to:" />
-                                <p:inputMask value="#{transferenciaBean.transferencia.contaTo}" mask="99999-9" />
-                                <h:outputText value="data a transferir:" />
+                            <p:panelGrid id="panelCadastrar" columns="3">
+                                <ez:editor/>
                                 
-                                <p:calendar locale="pt" showButtonPanel="true" navigator="true" value="#{transferenciaBean.transferencia.agenda}" id="ptCal"/> 
-                                <h:outputText value="Valor:" />
-                                    <pe:inputNumber id="tvalor" value="#{transferenciaBean.transferencia.valor}"   
-         symbol="$ " decimalSeparator="," thousandSeparator="." />  
-
-                                <h:outputText value="Tipo Taxa:" />
-                                <p:selectOneMenu value="#{transferenciaBean.transferencia.tipoOperacao}">  
-                                    <f:selectItem itemLabel="Selecione" itemValue="" />  
-                                    <f:selectItem itemLabel="Tipo A" itemValue="A" />  
-                                    <f:selectItem itemLabel="Tipo B" itemValue="B" />  
-                                    <f:selectItem itemLabel="Tipo C" itemValue="C" />  
-                                    <f:selectItem itemLabel="Tipo D" itemValue="D" />  
-                                </p:selectOneMenu> 
                             </p:panelGrid>
                             <p:commandButton value="Cadastrar"
                                              actionListener="#{transferenciaBean.cadastrar}" update=":formPrincipal:tabelaTr" oncomplete="dialogCadastrar.hide()"/>
