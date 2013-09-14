@@ -3,7 +3,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions" >
     <f:view contentType="text/html">
         <h:head>
             <f:facet name="first">
@@ -76,9 +77,9 @@
                                 
                                 <p:calendar locale="pt" showButtonPanel="true" navigator="true" value="#{transferenciaBean.transferencia.agenda}" id="ptCal"/> 
                                 <h:outputText value="Valor:" />
-                                <h:inputText id="valorInput" value="#{transferenciaBean.transferencia.valor}" >
-                                    <f:validateDoubleRange minimum="0.01" maximum="99999999.99" />
-                                </h:inputText>	
+                                <pe:inputNumber id="tvalor" value="#{transferenciaBean.transferencia.valor}"   
+         symbol="$ " decimalSeparator="," thousandSeparator="." />  
+
                                 <h:outputText value="Tipo Taxa:" />
                                 <p:selectOneMenu value="#{transferenciaBean.transferencia.tipoOperacao}">  
                                     <f:selectItem itemLabel="Selecione" itemValue="" />  
@@ -103,9 +104,9 @@
                                 
                                 <p:calendar locale="pt" showButtonPanel="true" navigator="true" value="#{transferenciaBean.transferencia.agenda}" id="ptCal"/> 
                                 <h:outputText value="Valor:" />
-                                <h:inputText id="valorInput" value="#{transferenciaBean.transferencia.valor}" >
-                                    <f:validateDoubleRange minimum="0.01" maximum="99999999.99" />
-                                </h:inputText>	
+                                    <pe:inputNumber id="tvalor" value="#{transferenciaBean.transferencia.valor}"   
+         symbol="$ " decimalSeparator="," thousandSeparator="." />  
+
                                 <h:outputText value="Tipo Taxa:" />
                                 <p:selectOneMenu value="#{transferenciaBean.transferencia.tipoOperacao}">  
                                     <f:selectItem itemLabel="Selecione" itemValue="" />  
@@ -120,7 +121,8 @@
                         </p:dialog>
                     </h:form>
                     <h:form id="formExcluir">
-                        <p:confirmDialog id="Excluir" message="Você gostaria de Deletar o #{transferenciaBean.transferencia.contaDe}?"
+                        <p:confirmDialog id="Excluir" 
+                                         message="Você gostaria de Deletar o #{transferenciaBean.transferencia.toString()}?"
                                          header="Excluir" severity="alert" widgetVar="confirmation">
                             <p:commandButton id="confirm" value="Sim" oncomplete="confirmation.hide();"
                                              actionListener="#{transferenciaBean.excluir}" update=":formPrincipal:tabelaTr"/>

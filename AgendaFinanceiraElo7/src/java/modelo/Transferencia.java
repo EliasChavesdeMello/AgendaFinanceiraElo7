@@ -2,10 +2,11 @@ package modelo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Transferencia implements Serializable {
-
     private Date created;
     private Date agenda;
     private String contaDe;
@@ -13,7 +14,15 @@ public class Transferencia implements Serializable {
     private char tipoOperacao;
     private BigDecimal valor;
     private BigDecimal taxa;
-
+    @Override
+    public String toString() {
+        StringBuilder show = new StringBuilder();       
+        show.append("\nData Criação:").append(this.created).append("\nData Transf:").append(this.agenda)
+                .append("\nde:").append(this.contaDe).append("\npara:").append(contaTo).append("\ntipo:")
+                .append(this.tipoOperacao).append("\nvalor:").append(this.valor)
+                .append("\ntaxa:").append(this.taxa);
+        return show.toString();
+    }
     public Date getCreated() {
         return created;
     }

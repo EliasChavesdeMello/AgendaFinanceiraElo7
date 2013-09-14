@@ -77,7 +77,12 @@ public class TransferenciaDao implements Serializable {
         try {
             for (Iterator it = this.getTransferencias().iterator(); it.hasNext();) {
                 Transferencia trf = (Transferencia) it.next();
-                if (trf.getCreated().equals(transferencia.getCreated())) {
+                if ( trf.getCreated().equals(transferencia.getCreated()) &&
+                        trf.getAgenda().equals(transferencia.getAgenda()) &&
+                        trf.getTipoOperacao() == transferencia.getTipoOperacao()  &&
+                        trf.getValor().equals(transferencia.getValor()) &&
+                        trf.getContaDe().equals(transferencia.getContaDe()) && 
+                        trf.getContaTo().equals(transferencia.getContaTo()) ) {
                     it.remove();
                 }
             }
