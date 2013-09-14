@@ -1,61 +1,69 @@
 package modelo.dao;
 
-import com.thoughtworks.xstream.persistence.FilePersistenceStrategy;
-import com.thoughtworks.xstream.persistence.PersistenceStrategy;
-import com.thoughtworks.xstream.persistence.XmlArrayList;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import modelo.Transferencia;
 
-public class TransferenciaDao implements Serializable{
+public class TransferenciaDao implements Serializable {
 
-    public List<Transferencia> transferencias;
-    public PersistenceStrategy strategy;
-    public List listPersistence;
+    private List<Transferencia> transferencias;
+    private String dirParaPersistir;
 
-    public TransferenciaDao() {
+    public TransferenciaDao(String dirParaPersistir) {
         this.transferencias = new ArrayList<Transferencia>();
-        strategy = new FilePersistenceStrategy(new File("C:\\Users\\elias\\Desktop\\ELIAS-NAO-mexa\\lixo"));
-        listPersistence = new XmlArrayList(strategy);
-        for (Iterator it = listPersistence.iterator(); it.hasNext();) {
-            Transferencia trf = (Transferencia) it.next();
-            transferencias.add(trf);
+        this.dirParaPersistir = dirParaPersistir;
+        if ( new File(dirParaPersistir).exists() ) {
+            loadFromDisk();
+        }
+    }
+
+    private void loadFromDisk() {
+        XStream xs = new XStream(new DomDriver());
+
+        try {
+            FileInputStream fis = new FileInputStream(getDirParaPersistir());
+            xs.fromXML(fis, this.getTransferencias());
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
         }
     }
 
     private void atualiza() {
-        this.transferencias.clear();
-
-        listPersistence = new XmlArrayList(strategy);
-        for (Iterator it = listPersistence.iterator(); it.hasNext();) {
-            Transferencia trf = (Transferencia) it.next();
-            transferencias.add(trf);
+        XStream xs = new XStream();
+        try {
+            FileOutputStream fs = new FileOutputStream(getDirParaPersistir());
+            xs.toXML(this.getTransferencias(), fs);
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
         }
     }
 
     public List<Transferencia> listar() {
-        return transferencias;
+        return getTransferencias();
     }
 
     public void inserir(Transferencia transferencia) {
-
         try {
-            listPersistence.add(transferencia);
+            this.getTransferencias().add (transferencia);
         } finally {
             atualiza();
         }
     }
 
     public void alterar(Transferencia transferencia) {
-        System.out.println("alterando");
         try {
-            for (Iterator it = listPersistence.iterator(); it.hasNext();) {
+            for (Iterator it = this.getTransferencias().iterator(); it.hasNext();) {
                 Transferencia trf = (Transferencia) it.next();
                 if (trf.getCreated().equals(transferencia.getCreated())) {
-
                     it.remove();
                 }
             }
@@ -67,15 +75,26 @@ public class TransferenciaDao implements Serializable{
 
     public void excluir(Transferencia transferencia) {
         try {
-            for (Iterator it = listPersistence.iterator(); it.hasNext();) {
+            for (Iterator it = this.getTransferencias().iterator(); it.hasNext();) {
                 Transferencia trf = (Transferencia) it.next();
                 if (trf.getCreated().equals(transferencia.getCreated())) {
-
                     it.remove();
                 }
             }
         } finally {
             atualiza();
         }
+    }
+    public List<Transferencia> getTransferencias() {
+        return transferencias;
+    }
+    public void setTransferencias(List<Transferencia> transferencias) {
+        this.transferencias = transferencias;
+    }
+    public String getDirParaPersistir() {
+        return dirParaPersistir;
+    }
+    public void setDirParaPersistir(String dirParaPersistir) {
+        this.dirParaPersistir = dirParaPersistir;
     }
 }

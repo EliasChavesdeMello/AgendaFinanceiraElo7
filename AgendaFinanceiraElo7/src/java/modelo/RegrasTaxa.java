@@ -26,9 +26,9 @@ public class RegrasTaxa {
 
     private static BigDecimal regraD(Transferencia transf) {
         BigDecimal valRetorno = null;
-            if (transf.getValor().compareTo(new BigDecimal("25000.00")) < 0) {
+        if (transf.getValor().compareTo(new BigDecimal("25000.00")) < 0) {
             valRetorno = regraA(transf);
-        } else if (transf.getValor().compareTo(new BigDecimal("25000.00")) < 0) {
+        } else if (transf.getValor().compareTo(new BigDecimal("120000.00")) < 0) {
             valRetorno = regraB(transf);
         } else {
             valRetorno = regraC(transf);
@@ -42,7 +42,7 @@ public class RegrasTaxa {
         if (dias > 30) {
             valRetorno = transf.getValor().multiply(new BigDecimal("0.012"));
         } else if (dias > 25) {
-                valRetorno = transf.getValor().multiply(new BigDecimal("0.021"));
+            valRetorno = transf.getValor().multiply(new BigDecimal("0.021"));
         } else if (dias > 20) {
             valRetorno = transf.getValor().multiply(new BigDecimal("0.043"));
         } else if (dias > 15) {
@@ -67,15 +67,14 @@ public class RegrasTaxa {
     }
 
     private static long calculaDiasEntreDatas(Date dataCriacao, Date dataExecucao) {
-        long dt = (dataExecucao.getTime() - dataCriacao.getTime()) + 3600000; // 1 hora para compensar horário de verão  
+        long dt = (dataExecucao.getTime() - dataCriacao.getTime()) + 3600000;
         long dias = dt / 86400000L;
         return dias;
 
     }
 
-    private static BigDecimal regraA (Transferencia transf) {
+    private static BigDecimal regraA(Transferencia transf) {
         BigDecimal valRetorno = transf.getValor().multiply(new BigDecimal("0.03")).add(new BigDecimal("2"));
         return valRetorno;
     }
-
 }
