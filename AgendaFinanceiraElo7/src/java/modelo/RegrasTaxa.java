@@ -2,10 +2,12 @@ package modelo;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
 
 public class RegrasTaxa {
-
-    public static BigDecimal getTaxa(Transferencia transf) {
+//design pattern ; strategy ou template?? TODO
+    public synchronized static BigDecimal getTaxa(Transferencia transf) {
         BigDecimal valRetorno = null;
         switch (transf.getTipoOperacao()) {
             case 'A':
@@ -57,19 +59,22 @@ public class RegrasTaxa {
 
     private static BigDecimal regraB(Transferencia transf) {
         long dias = calculaDiasEntreDatas(transf.getCreated(), transf.getAgenda());
+        System.out.println(transf.getCreated() + "\n" + transf.getAgenda() + " " + dias);
         BigDecimal valRetorno = null;
         if (dias < 31) {
             valRetorno = new BigDecimal("10");
         } else {
             valRetorno = new BigDecimal("8");
         }
+        System.out.println(dias);
         return valRetorno;
     }
 
-    private static long calculaDiasEntreDatas(Date dataCriacao, Date dataExecucao) {
-        long dt = (dataExecucao.getTime() - dataCriacao.getTime()) + 3600000;
-        long dias = dt / 86400000L;
-        return dias;
+    private static int calculaDiasEntreDatas(Date dataCriacao, Date dataExecucao) {
+        LocalDate d1a = new LocalDate(dataCriacao.getTime());
+        LocalDate d2a = new LocalDate(dataExecucao.getTime());
+        int days = Days.daysBetween(d1a, d2a).getDays();
+        return days;
 
     }
 

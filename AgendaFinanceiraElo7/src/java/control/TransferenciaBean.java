@@ -5,6 +5,7 @@ import modelo.Transferencia;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.util.Calendar;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import modelo.RegrasTaxa;
@@ -16,7 +17,7 @@ import modelo.dao.TransferenciaDao;
 public class TransferenciaBean implements Serializable {
     private Transferencia transferencia = new Transferencia();
     private TransferenciaDao transferenciaDao;
-
+    
     public TransferenciaBean() {
         FacesContext ctx = FacesContext.getCurrentInstance();
         String dirParaPersistir = ctx.getExternalContext().getInitParameter("dirParaPersistir");
@@ -29,17 +30,25 @@ public class TransferenciaBean implements Serializable {
         getTransferencia().setTaxa(RegrasTaxa.getTaxa(getTransferencia()));
         getTransferenciaDao().inserir(getTransferencia());
         setTransferencia(new Transferencia());
+        mensagemOperacao ("OK", "Transferência cadastrada");
+    }
+    
+    private void mensagemOperacao( String titulo, String mensagem ) {
+        FacesContext context = FacesContext.getCurrentInstance();            
+        context.addMessage(null, new FacesMessage(titulo, mensagem ));
     }
 
     public void alterar(ActionEvent actionEvent) {
         getTransferencia().setTaxa(RegrasTaxa.getTaxa(getTransferencia()));
         getTransferenciaDao().alterar(getTransferencia());
         setTransferencia(new Transferencia());
+        mensagemOperacao ("OK", "Transferência alterada");
     }
 
     public void excluir(ActionEvent actionEvent) {
         getTransferenciaDao().excluir(getTransferencia());
         setTransferencia(new Transferencia());
+        mensagemOperacao ("OK", "Transferência excluída");
     }
 
     public Transferencia getTransferencia() {

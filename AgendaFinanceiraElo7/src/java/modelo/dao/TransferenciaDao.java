@@ -1,7 +1,7 @@
 package modelo.dao;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,25 +13,23 @@ import java.util.List;
 import modelo.Transferencia;
 
 public class TransferenciaDao implements Serializable {
-
     private List<Transferencia> transferencias;
     private String dirParaPersistir;
-
     public TransferenciaDao(String dirParaPersistir) {
         this.transferencias = new ArrayList<Transferencia>();
         this.dirParaPersistir = dirParaPersistir;
-        if ( new File(dirParaPersistir).exists() ) {
+        File file =  new File(dirParaPersistir);
+        if ( file.exists() ) {
             loadFromDisk();
         }
     }
 
     private void loadFromDisk() {
-        XStream xs = new XStream(new DomDriver());
+        XStream xs = new XStream(new StaxDriver());
 
         try {
-            FileInputStream fis = new FileInputStream(getDirParaPersistir());
-            xs.fromXML(fis, this.getTransferencias());
-
+            FileInputStream fis = new FileInputStream(getDirParaPersistir());            
+            this.setTransferencias((List<Transferencia>)xs.fromXML(fis));
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
