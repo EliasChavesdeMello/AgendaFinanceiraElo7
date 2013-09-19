@@ -9,28 +9,24 @@
 
     <!-- INTERFACE -->
     <cc:interface>
+        <cc:attribute name="id" required="false"/>
+        <cc:attribute name="columns" required="false"/>
     </cc:interface>
-
     <!-- IMPLEMENTATION -->
     <cc:implementation>
+        <p:panelGrid id="#{cc.attrs.id}" columns="#{cc.attrs.columns}">
         <h:outputLabel for="contaDe" value="ContaDe: *" />  
         <p:inputMask mask="99999-9" id="contaDe" value="#{transferenciaBean.transferencia.contaDe}" required="true" label="ContaDe">  
-
             <p:ajax update="contaDe" event="blur" />
         </p:inputMask>  
         <p:message for="contaDe" display="text"/>  
-
         <h:outputLabel for="contaTo" value="ContaTo: *" />  
         <p:inputMask mask ="99999-0" id="contaTo" value="#{transferenciaBean.transferencia.contaTo}" required="true" label="ContaTo">  
-
             <p:ajax update="contaTo" event="blur" />
         </p:inputMask>  
         <p:message for="contaTo"  display="text"/>  
-
-
         <h:outputLabel for="calend" value="Data Execução: *" />  
         <p:calendar id="calend" locale="pt" showButtonPanel="true" navigator="true"  required="true" value="#{transferenciaBean.transferencia.agenda}"> 
-
         </p:calendar>
         <p:message for="calend" />  
 
@@ -52,5 +48,6 @@
             <p:ajax update="tselec" event="blur" />
         </p:selectOneMenu> 
         <p:message for="tselec" display="text"/>  
+        </p:panelGrid>
     </cc:implementation>
 </html>

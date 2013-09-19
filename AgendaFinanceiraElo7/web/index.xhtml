@@ -14,6 +14,7 @@
         </h:head>
         <h:body>
             <p:layout fullPage="true">
+                <p:growl id="growl" showDetail="true" sticky="true" /> 
                 <p:layoutUnit position="center">
                     <h:form id="formPrincipal">
                         <p:dataTable var="lista" value="#{transferenciaBean.transferenciaDao.transferencias}" id="tabelaTr">
@@ -68,21 +69,19 @@
                     </h:form>
                     <h:form id="formAlterar">
                         <p:dialog header="Alterar" widgetVar="dialogAlterar" modal="false" id="Alterar">
-                            <p:panelGrid id="panelAlterar" columns="3">
-                                <ez:editor/>                                
-                            </p:panelGrid>
+
+                                <ez:editor id="panelAlterar" columns="3"/>                                
+
                             <p:commandButton value="Alterar"
-                                             actionListener="#{transferenciaBean.alterar}" update=":formPrincipal:tabelaTr" oncomplete="dialogAlterar.hide();"/>
+                                             actionListener="#{transferenciaBean.alterar}" update=":formPrincipal:tabelaTr,:growl" oncomplete="dialogAlterar.hide();"/>
                         </p:dialog>
                     </h:form>
                     <h:form id="formCadastrar">
                         <p:dialog header="Cadastrar" widgetVar="dialogCadastrar" modal="false"  >
-                            <p:panelGrid id="panelCadastrar" columns="3">
-                                <ez:editor/>
-                                
-                            </p:panelGrid>
+                            
+                                <ez:editor id="panelCadastrar" columns="3" />
                             <p:commandButton value="Cadastrar"
-                                             actionListener="#{transferenciaBean.cadastrar}" update=":formPrincipal:tabelaTr" oncomplete="dialogCadastrar.hide()"/>
+                                             actionListener="#{transferenciaBean.cadastrar}" update=":formPrincipal:tabelaTr,:growl" oncomplete="dialogCadastrar.hide()"/>
                         </p:dialog>
                     </h:form>
                     <h:form id="formExcluir">
@@ -90,7 +89,7 @@
                                          message="Você gostaria de Deletar o #{transferenciaBean.transferencia.toString()}?"
                                          header="Excluir" severity="alert" widgetVar="confirmation">
                             <p:commandButton id="confirm" value="Sim" oncomplete="confirmation.hide();"
-                                             actionListener="#{transferenciaBean.excluir}" update=":formPrincipal:tabelaTr"/>
+                                             actionListener="#{transferenciaBean.excluir}" update=":formPrincipal:tabelaTr,:growl"/>
                             <p:commandButton id="decline" value="Não" onclick="confirmation.hide();" type="button" />
                         </p:confirmDialog>
                     </h:form>
@@ -99,4 +98,3 @@
         </h:body>
     </f:view>
 </html>
-

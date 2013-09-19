@@ -1,7 +1,5 @@
 package modelo.dao;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,14 +8,27 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+
 import modelo.Transferencia;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
+
+@ManagedBean(name = "transferenciaDao")
+@ApplicationScoped
 public class TransferenciaDao implements Serializable {
     private List<Transferencia> transferencias;
     private String dirParaPersistir;
-    public TransferenciaDao(String dirParaPersistir) {
+
+	public TransferenciaDao() {
         this.transferencias = new ArrayList<Transferencia>();
-        this.dirParaPersistir = dirParaPersistir;
+		FacesContext ctx = FacesContext.getCurrentInstance();
+		this.dirParaPersistir = ctx.getExternalContext().getInitParameter("dirParaPersistir");
+
         File file =  new File(dirParaPersistir);
         if ( file.exists() ) {
             loadFromDisk();
